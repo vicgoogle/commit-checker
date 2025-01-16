@@ -1,60 +1,29 @@
-/*
- * This file is part of the "GS Commit Message Checker" Action for Github.
- *
- * Copyright (C) 2019-2022 by Gilbertsoft LLC (gilbertsoft.org)
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * For the full license information, please read the LICENSE file that
- * was distributed with this source code.
- */
-
-/**
- * Imports
- */
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import {graphql} from '@octokit/graphql'
 import {ICheckerArguments} from './commit-message-checker'
 
 export interface PullRequestOptions {
-  checkAllCommitMessages: boolean // requires github token
+  checkAllCommitMessages: boolean
   accessToken: string
 }
-
-/**
- * Gets the inputs set by the user and the messages of the event.
- *
- * @returns   ICheckerArguments
- */
 export async function getInputs(): Promise<ICheckerArguments> {
   const result = {} as unknown as ICheckerArguments
 
   core.debug('Get inputs...')
 
-  // Get pattern
   result.pattern = core.getInput('pattern', {required: true})
   core.debug(`pattern: ${result.pattern}`)
 
-  // Get flags
   result.flags = core.getInput('flags')
   core.debug(`flags: ${result.flags}`)
 
-  // Get error message
   result.error = core.getInput('error', {required: true})
   core.debug(`error: ${result.error}`)
 
-  // Get checkAllCommitMessages
   const checkAllCommitMessagesStr = core.getInput('checkAllCommitMessages')
   core.debug(`checkAllCommitMessages: ${checkAllCommitMessagesStr}`)
 
-  // Set pullRequestOptions
   const pullRequestOptions: PullRequestOptions = {
     checkAllCommitMessages: checkAllCommitMessagesStr
       ? checkAllCommitMessagesStr === 'true'
@@ -63,18 +32,11 @@ export async function getInputs(): Promise<ICheckerArguments> {
   }
   core.debug(`accessToken: ${pullRequestOptions.accessToken}`)
 
-  // Get commit messages
   result.messages = await getMessages(pullRequestOptions)
 
   return result
 }
 
-/**
- * Gets all commit messages of a push or title and body of a pull request
- * concatenated to one message.
- *
- * @returns   string[]
- */
 async function getMessages(
   pullRequestOptions: PullRequestOptions
 ): Promise<string[]> {
@@ -105,7 +67,6 @@ async function getMessages(
         messages.push(message)
       }
 
-      // Handle pull request commits
       if (pullRequestOptions.checkAllCommitMessages) {
         if (!pullRequestOptions.accessToken) {
           throw new Error(

@@ -1,32 +1,6 @@
 {
-  "name": "@gsactions/commit-message-checker",
-  "version": "2.0.0-dev.0",
-  "description": "GitHub Action that checks commit messages of pushes and pull request against a regex pattern",
-  "keywords": [
-    "github",
-    "actions",
-    "commit",
-    "message",
-    "pull",
-    "request",
-    "push"
-  ],
-  "homepage": "https://github.com/GsActions/commit-message-checker#readme",
-  "bugs": {
-    "url": "https://github.com/GsActions/commit-message-checker/issues"
-  },
-  "license": "MIT",
-  "author": "Simon Gilli <ghactions@gilbertsoft.org> (https://gilbertsoft.org)",
-  "files": [
-    "action.yml",
-    "dist",
-    "lib"
-  ],
-  "main": "lib/main.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/GsActions/commit-message-checker.git"
-  },
+  "name": "commit-checker",
+  "version": "1.0",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write '**/*.ts'",
