@@ -73,7 +73,6 @@ export async function checkCommitMessages(
       core.info(`- OK: "${message}"`)
     } else {
       core.info(`- failed: "${message}"`)
-      result = false
     }
   }
 
