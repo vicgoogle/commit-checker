@@ -11,7 +11,7 @@ export async function checkCommitMessages(
   args: ICheckerArguments
 ): Promise<void> {
   if (args.pattern.length === 0) {
-    throw new Error(`PATTaaaaERN not defined.`)
+    throw new Error(`PATTERN not defined.`)
   }
 
   const regex = new RegExp('[^gimsuy]', 'g')

@@ -44,7 +44,7 @@ const core = __importStar(__nccwpck_require__(2186));
 function checkCommitMessages(args) {
     return __awaiter(this, void 0, void 0, function* () {
         if (args.pattern.length === 0) {
-            throw new Error(`PATTaaaaERN not defined.`);
+            throw new Error(`PATTERN not defined.`);
         }
         const regex = new RegExp('[^gimsuy]', 'g');
         let invalidChars;
@@ -324,7 +324,7 @@ function run() {
         try {
             const checkerArguments = yield inputHelper.getInputs();
             if (checkerArguments.messages.length === 0) {
-                core.info(`No commits found in the payload, skipping checasdasdadsk.`);
+                core.info(`No commits found in the payload, skipping check.`);
             }
             else {
                 yield commitMessageChecker.checkCommitMessages(checkerArguments);
